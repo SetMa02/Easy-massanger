@@ -1,26 +1,38 @@
 <template>
-
     <div class="v-contact-list">
-    <contact-user/>
+    <contact-user
+    v-for="contact in contact"
+    :key="contact.id"
+    :contact_data = "contact"
+    />
     </div>
 </template>
 
 <script>
-import contactUser from './v-contact-user.vue'
+import contactUser from './v-contact-user'
+import {mapActions, mapState} from 'vuex'
 
 export default {
    name: "v-contact-list",
    components:{
        contactUser
    },
-   props: {},
-   data(){
-       return {}
+   computed: {
+       ...mapState([
+           'contacts'
+       ])
    },
-   computed: {}
+   methods:{
+       ...mapActions([
+           'FETCH_CONTACTS'
+       ])
+   },
+    mounted() {
+      this.FETCH_CONTACTS()
+    }
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
